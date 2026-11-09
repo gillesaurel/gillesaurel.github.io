@@ -1,20 +1,25 @@
+import { useLanguage } from '../i18n/LanguageContext.jsx'
+
 export default function About() {
+  const { t } = useLanguage()
+  const a = t.about
+
   return (
     <section className="about" id="profil">
       <div className="about-grid">
         <div>
-          <p className="eyebrow">Profil</p>
-          <h2>Rigoureux au clavier, <br />fiable sur le terrain.</h2>
+          <p className="eyebrow">{a.eyebrow}</p>
+          <h2>{a.titleLine1} <br />{a.titleLine2}</h2>
         </div>
         <div className="about-body">
-          <p>Je termine un DEC en Techniques de l'informatique au Cégep de Rosemont, avec un intérêt marqué pour le développement d'applications mobiles et web. J'aime partir d'un problème concret — suivre ses dépenses, retrouver un produit en épicerie — et le transformer en application qui fonctionne vraiment, du modèle de données à l'interface.</p>
-          <p>En parallèle des études, je travaille comme superviseur/caissier chez Maxi et comme marchandiseur chez Coca-Cola : deux emplois qui m'ont appris à gérer les priorités, livrer sous délai et travailler en équipe — des réflexes que j'apporte aussi à mes projets de code.</p>
+          <p>{a.p1}</p>
+          <p>{a.p2}</p>
         </div>
       </div>
       <dl className="about-facts" style={{ marginTop: 40, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
-        <div className="fact"><dt>LOCALISATION</dt><dd>Montréal, Québec</dd></div>
-        <div className="fact"><dt>FORMATION</dt><dd>DEC Techniques de l'informatique</dd></div>
-        <div className="fact"><dt>RECHERCHE</dt><dd>Stage dès mars 2027 (2 mois)</dd></div>
+        <div className="fact"><dt>{a.facts.location.label}</dt><dd>{a.facts.location.value}</dd></div>
+        <div className="fact"><dt>{a.facts.education.label}</dt><dd>{a.facts.education.value}</dd></div>
+        <div className="fact"><dt>{a.facts.looking.label}</dt><dd>{a.facts.looking.value}</dd></div>
       </dl>
     </section>
   )

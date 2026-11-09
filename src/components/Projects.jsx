@@ -1,13 +1,16 @@
 import ProjectVisual from './ProjectVisual.jsx'
 import { projects } from '../data/projects.js'
+import { useLanguage } from '../i18n/LanguageContext.jsx'
 
 export default function Projects() {
+  const { lang, t } = useLanguage()
+
   return (
     <section className="projects" id="projets">
       <div className="projects-head">
         <div>
-          <p className="eyebrow">Projets</p>
-          <h2>Six projets, <br />six façons de coder.</h2>
+          <p className="eyebrow">{t.projectsSection.eyebrow}</p>
+          <h2>{t.projectsSection.titleLine1} <br /> {t.projectsSection.titleLine2}</h2>
         </div>
       </div>
 
@@ -16,9 +19,9 @@ export default function Projects() {
           <article className="project" key={project.id}>
             <ProjectVisual variant={project.visual} />
             <div className="project-body">
-              <p className="project-kind">{project.kind}</p>
+              <p className="project-kind">{project.kind[lang]}</p>
               <h3>{project.title}</h3>
-              <p>{project.description}</p>
+              <p>{project.description[lang]}</p>
               <div className="project-tags">
                 {project.tags.map((tag) => (
                   <span className="tag" key={tag}>{tag}</span>
@@ -35,7 +38,7 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       key={link.href}
                     >
-                      {link.label}
+                      {link.label[lang]}
                     </a>
                   ))}
                 </div>

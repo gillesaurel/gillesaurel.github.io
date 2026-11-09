@@ -1,8 +1,12 @@
+import { useLanguage } from '../i18n/LanguageContext.jsx'
+
 export default function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer className="foot">
-      <span>Gilles Aurel Nguemkam Fom — Montréal, QC</span>
-      <span className="mono">Dernière mise à jour · nov. 2026</span>
+      <span>{t.footer.location}</span>
+      <span className="mono">{t.footer.updated}</span>
     </footer>
   )
 }
