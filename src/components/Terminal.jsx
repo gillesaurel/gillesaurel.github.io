@@ -4,6 +4,26 @@ import { translations } from '../i18n/translations.js'
 import { useTheme } from '../ThemeContext.jsx'
 import { projects } from '../data/projects.js'
 
+function CodeSnippet({ code }) {
+  return (
+    <div className="terminal-code">
+      <div className="terminal-code-tab">{code.tab}</div>
+      <div className="terminal-code-body">
+        <span className="k">data class</span> <span className="t">{code.className}</span>({'\n'}
+        {'    '}<span className="k">val</span> {code.fields.nom}: <span className="t">String</span> = <span className="s">"{code.name}"</span>,{'\n'}
+        {'    '}<span className="k">val</span> {code.fields.programme}: <span className="t">String</span> = <span className="s">"{code.program}"</span>,{'\n'}
+        {'    '}<span className="k">val</span> {code.fields.cegep}: <span className="t">String</span> = <span className="s">"{code.school}"</span>,{'\n'}
+        {'    '}<span className="k">val</span> {code.fields.stack}: <span className="t">List</span>&lt;<span className="t">String</span>&gt; = <span className="t">listOf</span>({'\n'}
+        {'        '}<span className="s">"Kotlin"</span>, <span className="s">"Unity"</span>, <span className="s">"PHP"</span>,{'\n'}
+        {'        '}<span className="s">"Angular"</span>, <span className="s">"Spring Boot"</span>{'\n'}
+        {'    '}),{'\n'}
+        {'    '}<span className="k">val</span> {code.fields.disponible}: <span className="t">Boolean</span> = <span className="k">true</span> <span className="c">{code.comment}</span>{'\n'}
+        )
+      </div>
+    </div>
+  )
+}
+
 function Line({ line }) {
   if (line.type === 'input') {
     return (
@@ -11,6 +31,9 @@ function Line({ line }) {
         <span className="prompt">{line.prompt}</span> {line.text}
       </div>
     )
+  }
+  if (line.type === 'node') {
+    return <div className="terminal-line">{line.node}</div>
   }
   if (line.href) {
     return (
@@ -40,6 +63,10 @@ export default function Terminal() {
 
   function print(text, href) {
     setLines((prev) => [...prev, { type: 'output', text, href }])
+  }
+
+  function printNode(node) {
+    setLines((prev) => [...prev, { type: 'node', node }])
   }
 
   function runCommand(raw) {
@@ -101,6 +128,21 @@ export default function Terminal() {
       case 'sudo':
         print(term.sudo)
         break
+      case 'code':
+      case 'old':
+        printNode(<CodeSnippet code={term.code} />)
+        break
+      case 'cat': {
+        const target = cmd.split(/\s+/).slice(1).join(' ').trim().toLowerCase()
+        if (target === 'stagiaire.kt' || target === 'intern.kt') {
+          printNode(<CodeSnippet code={term.code} />)
+        } else if (target) {
+          print(term.catNotFound(target))
+        } else {
+          print(term.catUsage)
+        }
+        break
+      }
       default:
         print(term.unknown(cmd))
     }

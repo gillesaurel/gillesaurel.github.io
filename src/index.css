@@ -275,6 +275,26 @@ section:last-of-type { border-bottom: none; }
 }
 .terminal-body::-webkit-scrollbar { width: 8px; }
 .terminal-body::-webkit-scrollbar-thumb { background: var(--code-chrome); border-radius: 4px; }
+.terminal-code {
+  margin: 4px 0 2px;
+  border: 1px solid var(--code-chrome);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.terminal-code-tab {
+  padding: 6px 10px;
+  background: var(--code-panel);
+  font-size: 0.74rem;
+  color: var(--code-comment);
+  border-bottom: 1px solid var(--code-chrome);
+}
+.terminal-code-body {
+  padding: 12px 14px;
+  white-space: pre;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
 
 /* ---------- About ---------- */
 .about-grid { display: grid; grid-template-columns: 0.9fr 1.4fr; gap: 48px; }
